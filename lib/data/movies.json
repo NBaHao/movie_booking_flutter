@@ -1,0 +1,404 @@
+{
+    "movies": [
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor0",
+            "name": "Actor 0"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor1",
+            "name": "Actor 1"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor2",
+            "name": "Actor 2"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director0",
+            "name": "Director 0"
+          }
+        ],
+        "duration": 146,
+        "genres": [
+          "Genre0",
+          "Genre1"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 0",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 4.449690498232771,
+        "releaseDate": "2023-02-08T11:00:40.797",
+        "storyline": "This is the storyline of Movie 0.",
+        "totalVotes": 2010
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor2",
+            "name": "Actor 2"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor3",
+            "name": "Actor 3"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor4",
+            "name": "Actor 4"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director1",
+            "name": "Director 1"
+          }
+        ],
+        "duration": 176,
+        "genres": [
+          "Genre1",
+          "Genre2"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 1",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 2.191168256116529,
+        "releaseDate": "2022-03-26T11:00:40.797",
+        "storyline": "This is the storyline of Movie 1.",
+        "totalVotes": 7798
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor4",
+            "name": "Actor 4"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor5",
+            "name": "Actor 5"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor6",
+            "name": "Actor 6"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director2",
+            "name": "Director 2"
+          }
+        ],
+        "duration": 111,
+        "genres": [
+          "Genre2",
+          "Genre0"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 2",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 2.474827398706357,
+        "releaseDate": "2023-04-26T11:00:40.797",
+        "storyline": "This is the storyline of Movie 2.",
+        "totalVotes": 2134
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor6",
+            "name": "Actor 6"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor7",
+            "name": "Actor 7"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor8",
+            "name": "Actor 8"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director3",
+            "name": "Director 3"
+          }
+        ],
+        "duration": 149,
+        "genres": [
+          "Genre0",
+          "Genre1"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 3",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 4.972634415421892,
+        "releaseDate": "2023-05-27T11:00:40.797",
+        "storyline": "This is the storyline of Movie 3.",
+        "totalVotes": 4360
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor8",
+            "name": "Actor 8"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor9",
+            "name": "Actor 9"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor10",
+            "name": "Actor 10"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director4",
+            "name": "Director 4"
+          }
+        ],
+        "duration": 104,
+        "genres": [
+          "Genre1",
+          "Genre2"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 4",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 3.718822959775654,
+        "releaseDate": "2023-03-20T11:00:40.797",
+        "storyline": "This is the storyline of Movie 4.",
+        "totalVotes": 488
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor10",
+            "name": "Actor 10"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor11",
+            "name": "Actor 11"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor12",
+            "name": "Actor 12"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director5",
+            "name": "Director 5"
+          }
+        ],
+        "duration": 99,
+        "genres": [
+          "Genre2",
+          "Genre0"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 5",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 1.5628021524590685,
+        "releaseDate": "2022-01-15T11:00:40.797",
+        "storyline": "This is the storyline of Movie 5.",
+        "totalVotes": 5775
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor12",
+            "name": "Actor 12"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor13",
+            "name": "Actor 13"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor14",
+            "name": "Actor 14"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director6",
+            "name": "Director 6"
+          }
+        ],
+        "duration": 171,
+        "genres": [
+          "Genre0",
+          "Genre1"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 6",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 1.8280011057399759,
+        "releaseDate": "2023-11-08T11:00:40.797",
+        "storyline": "This is the storyline of Movie 6.",
+        "totalVotes": 14
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor14",
+            "name": "Actor 14"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor15",
+            "name": "Actor 15"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor16",
+            "name": "Actor 16"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director7",
+            "name": "Director 7"
+          }
+        ],
+        "duration": 108,
+        "genres": [
+          "Genre1",
+          "Genre2"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 7",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 0.42211276632844297,
+        "releaseDate": "2022-05-21T11:00:40.797",
+        "storyline": "This is the storyline of Movie 7.",
+        "totalVotes": 2869
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor16",
+            "name": "Actor 16"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor17",
+            "name": "Actor 17"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor18",
+            "name": "Actor 18"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director8",
+            "name": "Director 8"
+          }
+        ],
+        "duration": 132,
+        "genres": [
+          "Genre2",
+          "Genre0"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 8",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 1.3813011965596733,
+        "releaseDate": "2024-06-16T11:00:40.797",
+        "storyline": "This is the storyline of Movie 8.",
+        "totalVotes": 7114
+      },
+      {
+        "actors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor18",
+            "name": "Actor 18"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor19",
+            "name": "Actor 19"
+          },
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/actor20",
+            "name": "Actor 20"
+          }
+        ],
+        "censorRating": "PG-13",
+        "countries": "USA, UK",
+        "directors": [
+          {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/actor.jpg?alt=media&token=4a011865-dfb9-4ecc-9b81-38d708087f31",
+            "infoUrl": "https://example.com/director9",
+            "name": "Director 9"
+          }
+        ],
+        "duration": 99,
+        "genres": [
+          "Genre0",
+          "Genre1"
+        ],
+        "languages": "English, Spanish",
+        "name": "Movie 9",
+        "posterUrl": "https://firebasestorage.googleapis.com/v0/b/movie-booking-app-f7e08.appspot.com/o/poster.jpg?alt=media&token=11488ad1-b744-4265-a61a-a8c3166f1fef",
+        "rating": 0.6711408205022418,
+        "releaseDate": "2024-06-24T11:00:40.797",
+        "storyline": "This is the storyline of Movie 9.",
+        "totalVotes": 4684
+      }
+    ]
+  }
