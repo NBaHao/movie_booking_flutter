@@ -43,6 +43,7 @@ dependencies:
   http: ^1.2.1
   readmore: ^3.0.0
   flutter_bloc: ^8.1.6
+  auto_scroll_text: ^0.0.7
 
 dev_dependencies:
   flutter_test:

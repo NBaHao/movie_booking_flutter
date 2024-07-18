@@ -7,10 +7,11 @@ class MovieInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,
-          child: Text("${title}:",
+          child: Text("$title:",
               style: const TextStyle(
                   fontSize: 16, color: Color.fromRGBO(191, 191, 191, 1))),
         ),

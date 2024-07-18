@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:movie_booking/src/widgets/Celebs.dart';
-import 'package:movie_booking/src/widgets/MovieInfo.dart';
+import 'package:movie_booking/src/widgets/celebs.dart';
+import 'package:movie_booking/src/widgets/movie_info.dart';
 import 'package:readmore/readmore.dart';
 
 import '../models/movie.dart';
@@ -19,17 +19,17 @@ class MovieDetails extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              child: MainContent(context),
+              child: mainContent(context),
             ),
-            BackBtn(context),
-            BookingBtn(context),
+            backBtn(context),
+            bookingBtn(context),
           ],
         ),
       ),
     );
   }
 
-  Positioned BackBtn(BuildContext context) {
+  Positioned backBtn(BuildContext context) {
     return Positioned(
       top: 10,
       left: 10,
@@ -51,7 +51,7 @@ class MovieDetails extends StatelessWidget {
     );
   }
 
-  Column MainContent(BuildContext context) {
+  Column mainContent(BuildContext context) {
     return Column(
       children: [
         Stack(children: [
@@ -72,13 +72,17 @@ class MovieDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                     child: Text(
                       movie.name!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+                      strutStyle: const StrutStyle(
+                        forceStrutHeight: true,
+                        height: 1.8,
+                      ),
                     ),
                   ),
                   Padding(
@@ -201,7 +205,7 @@ class MovieDetails extends StatelessWidget {
     );
   }
 
-  BookingBtn(BuildContext context) {
+  bookingBtn(BuildContext context) {
     return Positioned(
       bottom: 10,
       left: 16,
