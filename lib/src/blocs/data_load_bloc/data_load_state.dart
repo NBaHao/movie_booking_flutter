@@ -1,25 +1,24 @@
 import '../../models/movie.dart';
 
 abstract class DataLoadState {
-  const DataLoadState();
+  List<Movie> movies;
+  DataLoadState(this.movies);
 }
 
 class DataLoadInitial extends DataLoadState {
-  const DataLoadInitial();
+  DataLoadInitial() : super([]);
 }
 
 class DataLoadInProgress extends DataLoadState {
-  const DataLoadInProgress();
+  DataLoadInProgress(super.movies);
 }
 
 class DataLoadSuccess extends DataLoadState {
-  const DataLoadSuccess(this.movies);
-
-  final List<Movie> movies;
+  DataLoadSuccess(super.movies);
 }
 
 class DataLoadFailure extends DataLoadState {
-  const DataLoadFailure(this.error);
+  DataLoadFailure(super.movies, this.error);
 
   final String error;
 }

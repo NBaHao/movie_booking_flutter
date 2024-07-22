@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_state.dart';
 import 'package:movie_booking/src/screens/configuration.dart';
 import 'package:movie_booking/src/screens/movie_details.dart';
+import 'package:movie_booking/src/screens/movies.dart';
 
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
@@ -25,9 +27,11 @@ class MyApp extends StatelessWidget {
           case '/':
             return MaterialPageRoute(builder: (context) => const MainContent());
           case '/movie_details':
-            return MaterialPageRoute(builder: (context) => MovieDetails(movie: args as Movie));
+            return MaterialPageRoute(
+                builder: (context) => MovieDetails(movie: args as Movie));
           case '/configuration':
-            return MaterialPageRoute(builder: (context) => const Configuration());
+            return MaterialPageRoute(
+                builder: (context) => const Configuration());
           default:
             return null;
         }
@@ -59,13 +63,26 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<NavigationBloc>(
       create: (context) => NavigationBloc(),
-      child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
+      child: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
         return Scaffold(
           body: switch (state.currentPage) {
-            NavigationStateEnum.homePage => const HomePage(userId: 'harohienlanhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'),
-            NavigationStateEnum.ticketPage => const Center(child: Text('Ticket Page')),
-            NavigationStateEnum.moviePage => const Center(child: Text('Movie Page')),
-            NavigationStateEnum.profilePage => const Center(child: Text('Profile Page')),
+            NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>(
+                create: (context) => DataLoadBloc(),
+                child: const HomePage(userId: 'harohienlanh')),
+            NavigationStateEnum.ticketPage =>
+              const Center(child: Text('Ticket Page')),
+            NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>(
+                create: (context) => DataLoadBloc(),
+                child: Center(
+                    child: (state as NavigationMoviePageState)
+                                .currentMoviePage ==
+                            TabMovieStateEnum.comingSoon
+                        ? const Movies(firstTab: TabMovieStateEnum.comingSoon)
+                        : const Movies(firstTab: TabMovieStateEnum.nowPlaying)),
+              ),
+            NavigationStateEnum.profilePage =>
+              const Center(child: Text('Profile Page')),
           },
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Theme.of(context).colorScheme.primary,
@@ -94,7 +111,14 @@ class MainContent extends StatelessWidget {
                   backgroundColor: Colors.black),
             ],
             onTap: (index) {
-              context.read<NavigationBloc>().add(SwitchNavigationEvent(index));
+              if (index == 2) {
+                context.read<NavigationBloc>().add(
+                    MoviePageWithTabEvent(index, TabMovieStateEnum.nowPlaying));
+              } else {
+                context
+                    .read<NavigationBloc>()
+                    .add(SwitchNavigationEvent(index));
+              }
             },
           ),
         );

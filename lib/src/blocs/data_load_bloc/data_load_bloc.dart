@@ -8,13 +8,13 @@ import '../../models/movie.dart';
 import 'data_load_event.dart';
 
 class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
-  DataLoadBloc() : super(const DataLoadInitial()) {
+  DataLoadBloc() : super(DataLoadInitial()) {
     on<StartLoadingEvent>(_startLoading);
   }
 
   void _startLoading(
       StartLoadingEvent event, Emitter<DataLoadState> emit) async {
-    emit(const DataLoadInProgress());
+    emit(DataLoadInProgress([]));
 
     var response = await http.get(Uri.parse(
         'https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/movies.json'));
@@ -27,7 +27,7 @@ class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
       }
       emit(DataLoadSuccess(movies));
     } else {
-      emit(const DataLoadFailure('Failed to load data'));
+      emit(DataLoadFailure([], 'Failed to load data'));
     }
   }
 }

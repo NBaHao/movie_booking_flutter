@@ -4,40 +4,53 @@ import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_event.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_state.dart';
 import 'package:movie_booking/src/blocs/filtering_bloc/filtering_state.dart';
+import 'package:movie_booking/src/blocs/navigation_bloc/navigation_event.dart';
 
 import '../blocs/filtering_bloc/filtering_bloc.dart';
+import '../blocs/navigation_bloc/navigation_bloc.dart';
+import '../blocs/navigation_bloc/navigation_state.dart';
 import '../models/movie.dart';
 import '../widgets/coming_soon.dart';
 import '../widgets/now_playing.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.userId});
 
   final String userId;
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<DataLoadBloc>().add(const StartLoadingEvent());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<DataLoadBloc>(
-        create: (context) => DataLoadBloc()..add(const StartLoadingEvent()),
-        child:
-            BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
-          if (state is DataLoadInitial || state is DataLoadInProgress) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is DataLoadFailure) {
-            return Center(child: Text(state.error));
-          } else {
-            return BlocBuilder<FilteringBloc, FilteringState>(
-                builder: (context, isFiltering) {
-              List<Movie> moviesTmp = (state as DataLoadSuccess).movies;
-              if (BlocProvider.of<FilteringBloc>(context).state.isFiltering) {
-                moviesTmp =
-                    moviesTmp.where((movie) => movie.rating! > 3.0).toList();
+    return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
+              if (state is DataLoadSuccess) {
+    return BlocBuilder<FilteringBloc, FilteringState>(
+        builder: (context, isFiltering) {
+      List<Movie> moviesTmp = state.movies;
+      if (BlocProvider.of<FilteringBloc>(context).state.isFiltering) {
+        moviesTmp =
+            moviesTmp.where((movie) => movie.rating! > 3.0).toList();
+      }
+      return content(
+          userId: widget.userId, movies: moviesTmp, context: context);
+    });
+              } else if (state is DataLoadInitial || state is DataLoadInProgress) {
+    return const Center(child: CircularProgressIndicator());
+              } else if (state is DataLoadFailure) {
+    return Center(child: Text(state.error));
+              } else {
+    return const Center(child: Text('Unknown state'));
               }
-              return content(
-                  userId: userId, movies: moviesTmp, context: context);
             });
-          }
-        }));
   }
 }
 
@@ -67,12 +80,22 @@ Widget content(
             const SizedBox(height: 16),
             const SearchWidget(),
             const SizedBox(height: 16),
-            SubTiltle(title: 'Now Playing', action: () {}),
+            SubTiltle(
+                title: 'Now Playing',
+                action: () {
+                  context.read<NavigationBloc>().add(
+                      MoviePageWithTabEvent(2, TabMovieStateEnum.nowPlaying));
+                }),
             const SizedBox(height: 8),
             NowPlaying(
                 movies: movies.where((movie) => movie.isPlaying!).toList()),
             const SizedBox(height: 8),
-            SubTiltle(title: 'Coming Soon', action: () {}),
+            SubTiltle(
+                title: 'Coming Soon',
+                action: () {
+                  context.read<NavigationBloc>().add(
+                      MoviePageWithTabEvent(2, TabMovieStateEnum.comingSoon));
+                }),
             ComingSoon(
                 movies: movies.where((movie) => movie.isComing!).toList()),
           ],

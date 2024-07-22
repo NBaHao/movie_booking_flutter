@@ -1,6 +1,15 @@
-abstract class NavigationEvent {}
+import 'package:movie_booking/src/blocs/navigation_bloc/navigation_state.dart';
+
+abstract class NavigationEvent {
+  final int index;
+  NavigationEvent(this.index);
+}
 
 class SwitchNavigationEvent extends NavigationEvent {
-  final int index;
-  SwitchNavigationEvent(this.index);
+  SwitchNavigationEvent(super.index);
+}
+
+class MoviePageWithTabEvent extends NavigationEvent {
+  final TabMovieStateEnum tab;
+  MoviePageWithTabEvent(super.index, this.tab);
 }
