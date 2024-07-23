@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
+import 'package:movie_booking/src/blocs/filtering_bloc/filtering_bloc.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_state.dart';
 import 'package:movie_booking/src/screens/configuration.dart';
 import 'package:movie_booking/src/screens/movie_details.dart';
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
                 builder: (context) => MovieDetails(movie: args as Movie));
           case '/configuration':
             return MaterialPageRoute(
-                builder: (context) => Configuration(initFilter: args as bool));
+                builder: (context) => BlocProvider<FilteringBloc>(
+                    create: (context) => FilteringBloc(),
+                    child: Configuration(initFilter: args as bool)));
           case '/searching':
             return MaterialPageRoute(
                 builder: (context) =>

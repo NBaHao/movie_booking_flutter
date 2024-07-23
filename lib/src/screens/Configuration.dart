@@ -17,7 +17,7 @@ class Configuration extends StatefulWidget {
 class _ConfigurationState extends State<Configuration> {
   @override
   void initState() {
-    context.read().add(FliteringEvent(widget.initFilter));
+    context.read<FilteringBloc>().add(FliteringEvent(widget.initFilter));
     super.initState();
   }
 
@@ -47,7 +47,9 @@ class _ConfigurationState extends State<Configuration> {
                     Switch(
                       value: state.isFiltering,
                       onChanged: (value) {
-                        context.read().add(FliteringEvent(value));
+                        context
+                            .read<FilteringBloc>()
+                            .add(FliteringEvent(value));
                       },
                     ),
                   ],

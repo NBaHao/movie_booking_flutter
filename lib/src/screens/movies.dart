@@ -122,94 +122,100 @@ class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
                                     crossAxisCount: 2,
                                     mainAxisSpacing: 20),
                             itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Container(
-                                      width: 160,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.transparent,
-                                      ),
-                                      child: Image.network(
-                                        moviesTmp[index].posterUrl!,
-                                        fit: BoxFit.cover,
-                                        height: 200,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  SizedBox(
-                                    width: 160,
-                                    child: AutoScrollText(
-                                      moviesTmp[index].name!,
-                                      velocity: const Velocity(
-                                          pixelsPerSecond: Offset(40, 0)),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontSize: 18,
-                                          ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 160,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Icon(
-                                          Icons.video_camera_back_outlined,
-                                          color:
-                                              Color.fromRGBO(242, 242, 242, 1),
-                                          size: 16,
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/movie_details',
+                                      arguments: moviesTmp[index]);
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Container(
+                                        width: 160,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.transparent,
                                         ),
-                                        const SizedBox(width: 4),
-                                        Expanded(
-                                          child: Text(
-                                            moviesTmp[index]
-                                                .genres!
-                                                .join(", ")
-                                                .trim(),
+                                        child: Image.network(
+                                          moviesTmp[index].posterUrl!,
+                                          fit: BoxFit.cover,
+                                          height: 200,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    SizedBox(
+                                      width: 160,
+                                      child: AutoScrollText(
+                                        moviesTmp[index].name!,
+                                        velocity: const Velocity(
+                                            pixelsPerSecond: Offset(40, 0)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              fontSize: 18,
+                                            ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 160,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.video_camera_back_outlined,
+                                            color:
+                                                Color.fromRGBO(242, 242, 242, 1),
+                                            size: 16,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Expanded(
+                                            child: Text(
+                                              moviesTmp[index]
+                                                  .genres!
+                                                  .join(", ")
+                                                  .trim(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    SizedBox(
+                                      width: 160,
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.calendar_today_outlined,
+                                            color:
+                                                Color.fromRGBO(242, 242, 242, 1),
+                                            size: 16,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            DateFormat('dd.MM.yyyy').format(
+                                                moviesTmp[index].releaseDate!),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  SizedBox(
-                                    width: 160,
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.calendar_today_outlined,
-                                          color:
-                                              Color.fromRGBO(242, 242, 242, 1),
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          DateFormat('dd.MM.yyyy').format(
-                                              moviesTmp[index].releaseDate!),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                             itemCount: moviesTmp.length,
