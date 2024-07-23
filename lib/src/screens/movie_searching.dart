@@ -6,15 +6,15 @@ import '../blocs/search_bloc/search_bloc.dart';
 import '../blocs/search_bloc/search_event.dart';
 import '../blocs/search_bloc/search_state.dart';
 
-class Searching extends StatefulWidget {
+class MovieSearching extends StatefulWidget {
   final List<Movie> movies;
-  const Searching({super.key, required this.movies});
+  const MovieSearching({super.key, required this.movies});
 
   @override
   createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<Searching> {
+class _SearchScreenState extends State<MovieSearching> {
   final TextEditingController _searchController = TextEditingController();
   final SearchBloc _searchBloc = SearchBloc();
 
