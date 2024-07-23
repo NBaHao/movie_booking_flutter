@@ -5,3 +5,7 @@ abstract class DataLoadEvent {
 class StartLoadingEvent extends DataLoadEvent {
   const StartLoadingEvent();
 }
+
+class SetFilteringEvent extends DataLoadEvent {
+  const SetFilteringEvent();
+}

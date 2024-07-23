@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_event.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_state.dart';
-import 'package:movie_booking/src/blocs/filtering_bloc/filtering_state.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_event.dart';
 
-import '../blocs/filtering_bloc/filtering_bloc.dart';
 import '../blocs/navigation_bloc/navigation_bloc.dart';
 import '../blocs/navigation_bloc/navigation_state.dart';
 import '../models/movie.dart';
@@ -23,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   void initState() {
     context.read<DataLoadBloc>().add(const StartLoadingEvent());
@@ -32,29 +31,27 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
-      if (state is DataLoadSuccess) {
-        return BlocBuilder<FilteringBloc, FilteringState>(
-            builder: (context, isFiltering) {
+      if (state is DataLoadSuccessState || state is DataFilteredState) {
+        return Builder(
+            builder: (context) {
           List<Movie> moviesTmp = state.movies;
-          if (BlocProvider.of<FilteringBloc>(context).state.isFiltering) {
+          if (state is DataFilteredState) {
             moviesTmp =
                 moviesTmp.where((movie) => movie.rating! > 3.0).toList();
           }
           return content(
               userId: widget.userId, movies: moviesTmp, context: context);
         });
-      } else if (state is DataLoadInitial || state is DataLoadInProgress) {
+      } else if (state is DataLoadInitialState || state is DataLoadInProgressState) {
         return const Center(child: CircularProgressIndicator());
-      } else if (state is DataLoadFailure) {
+      } else if (state is DataLoadFailureState) {
         return Center(child: Text(state.error));
       } else {
         return const Center(child: Text('Unknown state'));
       }
     });
   }
-}
-
-Widget content(
+  Widget content(
     {required String userId,
     required List<Movie> movies,
     required BuildContext context}) {
@@ -68,19 +65,23 @@ Widget content(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Expanded(child: WelcomeMessage(userId: userId)),
+              Expanded(child: welcomeMessage(userId: userId)),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/configuration');
+                  Navigator.pushNamed(context, '/configuration', arguments: context.read<DataLoadBloc>().state is DataFilteredState).then((isFiltering) {
+                    if (isFiltering == true) {
+                      context.read<DataLoadBloc>().add(const SetFilteringEvent());
+                    }
+                  });
                 },
                 child: Image.asset('assets/icon_configuration.png',
                     width: 32, height: 32),
               ),
             ]),
             const SizedBox(height: 16),
-            const SearchWidget(),
+            searchWidget(),
             const SizedBox(height: 16),
-            SubTiltle(
+            subTiltle(
                 title: 'Now Playing',
                 action: () {
                   context.read<NavigationBloc>().add(
@@ -90,7 +91,7 @@ Widget content(
             NowPlaying(
                 movies: movies.where((movie) => movie.isPlaying!).toList()),
             const SizedBox(height: 8),
-            SubTiltle(
+            subTiltle(
                 title: 'Coming Soon',
                 action: () {
                   context.read<NavigationBloc>().add(
@@ -105,14 +106,8 @@ Widget content(
   );
 }
 
-class SearchWidget extends StatelessWidget {
-  const SearchWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SearchBar(
+Widget searchWidget() {
+return SearchBar(
       hintText: 'Search',
       backgroundColor:
           const WidgetStatePropertyAll<Color>(Color.fromRGBO(28, 28, 28, 1)),
@@ -138,18 +133,10 @@ class SearchWidget extends StatelessWidget {
       onChanged: (value) => Navigator.pushNamed(context, '/searching',
           arguments: context.read<DataLoadBloc>().state.movies),
     );
-  }
 }
 
-class SubTiltle extends StatelessWidget {
-  const SubTiltle({super.key, required this.title, required this.action});
-
-  final String title;
-  final Function action;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+Widget subTiltle ({required String title, required Function action}) {
+  return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title,
@@ -174,17 +161,11 @@ class SubTiltle extends StatelessWidget {
         )
       ],
     );
-  }
 }
 
-class WelcomeMessage extends StatelessWidget {
-  const WelcomeMessage({super.key, required this.userId});
+ Widget welcomeMessage({required String userId}){
 
-  final String userId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
+  return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Hi, $userId', style: Theme.of(context).textTheme.bodySmall),
@@ -197,5 +178,7 @@ class WelcomeMessage extends StatelessWidget {
         ),
       ],
     );
-  }
 }
+
+}
+

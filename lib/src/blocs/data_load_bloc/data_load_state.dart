@@ -5,20 +5,24 @@ abstract class DataLoadState {
   DataLoadState(this.movies);
 }
 
-class DataLoadInitial extends DataLoadState {
-  DataLoadInitial() : super([]);
+class DataLoadInitialState extends DataLoadState {
+  DataLoadInitialState() : super([]);
 }
 
-class DataLoadInProgress extends DataLoadState {
-  DataLoadInProgress(super.movies);
+class DataLoadInProgressState extends DataLoadState {
+  DataLoadInProgressState(super.movies);
 }
 
-class DataLoadSuccess extends DataLoadState {
-  DataLoadSuccess(super.movies);
+class DataLoadSuccessState extends DataLoadState {
+  DataLoadSuccessState(super.movies);
 }
 
-class DataLoadFailure extends DataLoadState {
-  DataLoadFailure(super.movies, this.error);
+class DataLoadFailureState extends DataLoadState {
+  DataLoadFailureState(super.movies, this.error);
 
   final String error;
+}
+
+class DataFilteredState extends DataLoadState {
+  DataFilteredState(super.movies);
 }

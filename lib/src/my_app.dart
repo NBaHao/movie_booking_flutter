@@ -32,10 +32,11 @@ class MyApp extends StatelessWidget {
                 builder: (context) => MovieDetails(movie: args as Movie));
           case '/configuration':
             return MaterialPageRoute(
-                builder: (context) => const Configuration());
+                builder: (context) => Configuration(initFilter: args as bool));
           case '/searching':
             return MaterialPageRoute(
-                builder: (context) => MovieSearching(movies: args as List<Movie>));
+                builder: (context) =>
+                    MovieSearching(movies: args as List<Movie>));
           default:
             return null;
         }

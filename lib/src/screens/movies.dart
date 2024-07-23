@@ -66,7 +66,7 @@ class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
       child: BlocBuilder<DataLoadBloc, DataLoadState>(
         builder: (context, state) {
           List<Movie> movies = state.movies;
-          if (state is DataLoadSuccess) {
+          if (state is DataLoadSuccessState || state is DataFilteredState) {
             return Column(
               children: [
                 Container(

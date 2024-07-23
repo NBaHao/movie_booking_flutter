@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,13 +9,14 @@ import '../../models/movie.dart';
 import 'data_load_event.dart';
 
 class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
-  DataLoadBloc() : super(DataLoadInitial()) {
+  DataLoadBloc() : super(DataLoadInitialState()) {
     on<StartLoadingEvent>(_startLoading);
+    on<SetFilteringEvent>(_setFiltering);
   }
 
   void _startLoading(
       StartLoadingEvent event, Emitter<DataLoadState> emit) async {
-    emit(DataLoadInProgress([]));
+    emit(DataLoadInProgressState([]));
 
     var response = await http.get(Uri.parse(
         'https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/movies.json'));
@@ -25,9 +27,13 @@ class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
       for (final movie in data) {
         movies.add(Movie.fromJson(movie));
       }
-      emit(DataLoadSuccess(movies));
+      emit(DataLoadSuccessState(movies));
     } else {
-      emit(DataLoadFailure([], 'Failed to load data'));
+      emit(DataLoadFailureState([], 'Failed to load data'));
     }
+  }
+
+  FutureOr<void> _setFiltering(SetFilteringEvent event, Emitter<DataLoadState> emit) {
+    emit(DataFilteredState(state.movies));
   }
 }
