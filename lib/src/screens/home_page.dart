@@ -32,25 +32,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
-              if (state is DataLoadSuccess) {
-    return BlocBuilder<FilteringBloc, FilteringState>(
-        builder: (context, isFiltering) {
-      List<Movie> moviesTmp = state.movies;
-      if (BlocProvider.of<FilteringBloc>(context).state.isFiltering) {
-        moviesTmp =
-            moviesTmp.where((movie) => movie.rating! > 3.0).toList();
+      if (state is DataLoadSuccess) {
+        return BlocBuilder<FilteringBloc, FilteringState>(
+            builder: (context, isFiltering) {
+          List<Movie> moviesTmp = state.movies;
+          if (BlocProvider.of<FilteringBloc>(context).state.isFiltering) {
+            moviesTmp =
+                moviesTmp.where((movie) => movie.rating! > 3.0).toList();
+          }
+          return content(
+              userId: widget.userId, movies: moviesTmp, context: context);
+        });
+      } else if (state is DataLoadInitial || state is DataLoadInProgress) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (state is DataLoadFailure) {
+        return Center(child: Text(state.error));
+      } else {
+        return const Center(child: Text('Unknown state'));
       }
-      return content(
-          userId: widget.userId, movies: moviesTmp, context: context);
     });
-              } else if (state is DataLoadInitial || state is DataLoadInProgress) {
-    return const Center(child: CircularProgressIndicator());
-              } else if (state is DataLoadFailure) {
-    return Center(child: Text(state.error));
-              } else {
-    return const Center(child: Text('Unknown state'));
-              }
-            });
   }
 }
 
@@ -128,6 +128,15 @@ class SearchWidget extends StatelessWidget {
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       leading:
           const Icon(Icons.search, color: Color.fromRGBO(242, 242, 242, 1)),
+      onTap: () {
+        Navigator.pushNamed(context, '/searching',
+                arguments: context.read<DataLoadBloc>().state.movies)
+            .then((_) =>
+                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus());
+      },
+      onTapOutside: (event) => FocusScope.of(context).unfocus(),
+      onChanged: (value) => Navigator.pushNamed(context, '/searching',
+          arguments: context.read<DataLoadBloc>().state.movies),
     );
   }
 }

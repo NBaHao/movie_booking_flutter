@@ -11,6 +11,7 @@ import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
 import 'models/movie.dart';
 import 'screens/home_page.dart';
+import 'screens/searching.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           case '/configuration':
             return MaterialPageRoute(
                 builder: (context) => const Configuration());
+          case '/searching':
+            return MaterialPageRoute(
+                builder: (context) => Searching(movies: args as List<Movie>));
           default:
             return null;
         }
