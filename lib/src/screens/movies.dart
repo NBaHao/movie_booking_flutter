@@ -21,7 +21,6 @@ class Movies extends StatefulWidget {
 }
 
 class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
-
   late final _tabController = TabController(
       length: 2, vsync: this, initialIndex: widget.firstTab.index);
   final _tabs = [
@@ -65,7 +64,7 @@ class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<DataLoadBloc, DataLoadState>(
-        builder: (context, state) {  
+        builder: (context, state) {
           List<Movie> movies = state.movies;
           if (state is DataLoadSuccess) {
             return Column(
@@ -109,13 +108,11 @@ class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
                           if (state.currentMoviePage ==
                               TabMovieStateEnum.nowPlaying) {
                             moviesTmp = movies
-                                .where((movie) =>
-                                    movie.isPlaying ?? false)
+                                .where((movie) => movie.isPlaying ?? false)
                                 .toList();
                           } else {
                             moviesTmp = movies
-                                .where((movie) =>
-                                    movie.isComing ?? false)
+                                .where((movie) => movie.isComing ?? false)
                                 .toList();
                           }
                           return GridView.builder(
