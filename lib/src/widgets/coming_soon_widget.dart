@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/movie.dart';
 
-class ComingSoon extends StatelessWidget {
-  const ComingSoon({super.key, required this.movies});
+class ComingSoonWidget extends StatelessWidget {
+  const ComingSoonWidget({super.key, required this.movies});
   final List<Movie> movies;
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,15 @@ class ComingSoon extends StatelessWidget {
                       decoration: const BoxDecoration(
                         color: Colors.transparent,
                       ),
-                      child: Image.network(movies[index].posterUrl!,
-                          fit: BoxFit.cover, height: 200, width: 130),
+                      child: Image.network(
+                          movies[index].posterUrl ??
+                              'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                          fit: BoxFit.cover,
+                          height: 200,
+                          width: 130),
                     )),
                 const SizedBox(height: 4),
-                AutoScrollText(movies[index].name!,
+                AutoScrollText(movies[index].name ?? 'null',
                     velocity: const Velocity(pixelsPerSecond: Offset(40, 0)),
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.bold,
@@ -44,7 +48,7 @@ class ComingSoon extends StatelessWidget {
                         color: Color.fromRGBO(242, 242, 242, 1), size: 16),
                     const SizedBox(width: 4),
                     Expanded(
-                      child: Text(movies[index].genres!.join(", ").trim(),
+                      child: Text(movies[index].genres?.join(", ") ?? 'null',
                           style: Theme.of(context).textTheme.bodySmall,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis),
@@ -58,8 +62,10 @@ class ComingSoon extends StatelessWidget {
                         color: Color.fromRGBO(242, 242, 242, 1), size: 16),
                     const SizedBox(width: 4),
                     Text(
-                        DateFormat('dd.MM.yyyy')
-                            .format(movies[index].releaseDate!),
+                        movies[index].releaseDate != null
+                            ? DateFormat('dd.MM.yyyy')
+                                .format(movies[index].releaseDate!)
+                            : 'null',
                         style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),

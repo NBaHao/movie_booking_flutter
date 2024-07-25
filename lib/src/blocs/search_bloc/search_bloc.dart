@@ -5,14 +5,15 @@ import 'search_event.dart';
 import 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  SearchBloc() : super(SearchInitialState()) {
-    on<SearchEventFetch>(_seachingData);
+  final List<Movie> movies;
+  SearchBloc(this.movies) : super(SearchInitialState()) {
+    on<SearchFetchEvent>(_seachingData);
   }
 
-  void _seachingData(SearchEventFetch event, Emitter<SearchState> emit) {
+  void _seachingData(SearchFetchEvent event, Emitter<SearchState> emit) {
     List<Movie> searchedMovies = [];
-    for (Movie movie in event.movies) {
-      if (movie.name!.toLowerCase().contains(event.query.toLowerCase())) {
+    for (Movie movie in movies) {
+      if (movie.name?.toLowerCase().contains(event.query.toLowerCase()) ?? false) {
         searchedMovies.add(movie);
       }
     }

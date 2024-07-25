@@ -6,8 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../models/movie.dart';
 
-class NowPlaying extends StatefulWidget {
-  const NowPlaying({super.key, required this.movies});
+class NowPlayingWidget extends StatefulWidget {
+  const NowPlayingWidget({super.key, required this.movies});
   final List<Movie> movies;
 
   @override
@@ -16,7 +16,7 @@ class NowPlaying extends StatefulWidget {
   }
 }
 
-class _NowPlayingState extends State<NowPlaying> {
+class _NowPlayingState extends State<NowPlayingWidget> {
   int _currentMovie = 0;
 
   @override
@@ -43,13 +43,15 @@ class _NowPlayingState extends State<NowPlaying> {
                             decoration: const BoxDecoration(
                               color: Colors.transparent,
                             ),
-                            child: Image.network(movie.posterUrl!,
+                            child: Image.network(
+                                movie.posterUrl ??
+                                    'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                 fit: BoxFit.cover),
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          movie.name!,
+                          movie.name ?? 'null',
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -59,7 +61,7 @@ class _NowPlayingState extends State<NowPlaying> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                            "${movie.duration! ~/ 60}h${movie.duration! % 60}m • ${movie.genres!.join(', ').trim()}",
+                            "${(movie.duration ?? 0) ~/ 60}h${(movie.duration ?? 0) % 60}m • ${movie.genres?.join(', ') ?? 'null'}",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 12),
                             maxLines: 1,
@@ -74,7 +76,7 @@ class _NowPlayingState extends State<NowPlaying> {
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               textBaseline: TextBaseline.alphabetic,
                               children: [
-                                Text(movie.rating!.toStringAsFixed(2),
+                                Text(movie.rating?.toStringAsFixed(2) ?? "null",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MovieInfo extends StatelessWidget {
-  const MovieInfo({super.key, required this.title, required this.value});
+class MovieInfoWidget extends StatelessWidget {
+  const MovieInfoWidget({super.key, required this.title, required this.value});
   final String title;
   final String value;
   @override

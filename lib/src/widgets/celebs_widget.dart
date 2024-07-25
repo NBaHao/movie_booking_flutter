@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_booking/src/models/movie.dart';
 
-class Celebs extends StatelessWidget {
-  const Celebs({super.key, required this.title, required this.celebs});
+class CelebsWidget extends StatelessWidget {
+  const CelebsWidget({super.key, required this.title, required this.celebs});
   final String title;
   final List<Celeb> celebs;
   @override
@@ -31,12 +31,12 @@ class Celebs extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: NetworkImage(celebs[index].imageUrl!)
+                      backgroundImage: NetworkImage(celebs[index].imageUrl ?? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        celebs[index].name!,
+                        celebs[index].name ?? 'null',
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color.fromRGBO(242, 242, 242, 1),

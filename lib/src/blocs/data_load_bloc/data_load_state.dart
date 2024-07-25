@@ -22,7 +22,3 @@ class DataLoadFailureState extends DataLoadState {
 
   final String error;
 }
-
-class DataFilteredState extends DataLoadState {
-  DataFilteredState(super.movies);
-}

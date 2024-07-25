@@ -1,9 +1,8 @@
-import '../../models/movie.dart';
-
 abstract class SearchEvent {}
 
-class SearchEventFetch extends SearchEvent {
-  final List<Movie> movies;
+class SearchFetchEvent extends SearchEvent {
   final String query;
-  SearchEventFetch(this.query, this.movies);
+  SearchFetchEvent(this.query);
 }
+
+class SearchInitialEvent extends SearchEvent {}

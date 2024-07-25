@@ -1,65 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movie_booking/src/blocs/configuration_bloc/configuration_state.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
-import 'package:movie_booking/src/blocs/filtering_bloc/filtering_bloc.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_state.dart';
-import 'package:movie_booking/src/screens/configuration.dart';
-import 'package:movie_booking/src/screens/movie_details.dart';
-import 'package:movie_booking/src/screens/movies.dart';
+import 'package:movie_booking/src/blocs/search_bloc/search_bloc.dart';
+import 'package:movie_booking/src/screens/configuration_screen.dart';
+import 'package:movie_booking/src/screens/movie_details_screen.dart';
+import 'package:movie_booking/src/screens/movies_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'blocs/configuration_bloc/configuration_bloc.dart';
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
 import 'models/movie.dart';
 import 'screens/home_page.dart';
-import 'screens/movie_searching.dart';
+import 'screens/movie_searching_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Movie Booking',
-      initialRoute: '/',
-      onGenerateRoute: (settings) {
-        final args = settings.arguments;
-        switch (settings.name) {
-          case '/':
-            return MaterialPageRoute(builder: (context) => const MainContent());
-          case '/movie_details':
-            return MaterialPageRoute(
-                builder: (context) => MovieDetails(movie: args as Movie));
-          case '/configuration':
-            return MaterialPageRoute(
-                builder: (context) => BlocProvider<FilteringBloc>(
-                    create: (context) => FilteringBloc(),
-                    child: Configuration(initFilter: args as bool)));
-          case '/searching':
-            return MaterialPageRoute(
-                builder: (context) =>
-                    MovieSearching(movies: args as List<Movie>));
-          default:
-            return null;
-        }
+    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+      builder: (context, state) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Movie Booking',
+            initialRoute: '/',
+            onGenerateRoute: (settings) {
+              final args = settings.arguments;
+              switch (settings.name) {
+                case '/':
+                  return MaterialPageRoute(
+                      builder: (context) => const MainContent());
+                case '/movie_details':
+                  return MaterialPageRoute(
+                      builder: (context) =>
+                          MovieDetailsScreen(movie: args as Movie));
+                case '/configuration':
+                  return MaterialPageRoute(
+                      builder: (context) =>
+                          const ConfigurationScreen());
+                case '/searching':
+                  return MaterialPageRoute(
+                      builder: (context) => BlocProvider<SearchBloc>(
+                            create: (context) =>
+                                SearchBloc(args as List<Movie>),
+                            child: const MovieSearchingScreen(),
+                          ));
+                default:
+                  return null;
+              }
+            },
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: const Color.fromRGBO(252, 196, 52, 1),
+                  brightness: Brightness.dark,
+                  secondary: const Color.fromRGBO(252, 196, 52, 1),
+                  primary: const Color.fromRGBO(252, 196, 52, 1)),
+              scaffoldBackgroundColor: Colors.black,
+              textTheme: const TextTheme(
+                bodySmall: TextStyle(
+                    color: Color.fromRGBO(242, 242, 242, 1), fontSize: 12),
+                bodyLarge: TextStyle(
+                    color: Color.fromRGBO(242, 242, 242, 1), fontSize: 16),
+              ),
+              useMaterial3: true,
+            ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: switch (state.languageCode) {
+              'en' => const Locale('en', 'US'),
+              'vi' => const Locale('vi', 'VN'),
+              _ => const Locale('en', 'US')
+            },
+            home: const MainContent());
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromRGBO(252, 196, 52, 1),
-            brightness: Brightness.dark,
-            secondary: const Color.fromRGBO(252, 196, 52, 1),
-            primary: const Color.fromRGBO(252, 196, 52, 1)),
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: const TextTheme(
-          bodySmall:
-              TextStyle(color: Color.fromRGBO(242, 242, 242, 1), fontSize: 12),
-          bodyLarge:
-              TextStyle(color: Color.fromRGBO(242, 242, 242, 1), fontSize: 16),
-        ),
-        useMaterial3: true,
-      ),
-      home: const MainContent(),
     );
   }
 }
@@ -69,6 +86,7 @@ class MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String languageCode = Localizations.localeOf(context).languageCode;
     return BlocProvider<NavigationBloc>(
       create: (context) => NavigationBloc(),
       child: BlocBuilder<NavigationBloc, NavigationState>(
@@ -76,18 +94,22 @@ class MainContent extends StatelessWidget {
         return Scaffold(
           body: switch (state.currentPage) {
             NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>(
-                create: (context) => DataLoadBloc(),
+                create: (context) => DataLoadBloc(
+                    "https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/$languageCode/movies.json"),
                 child: const HomePage(userId: 'harohienlanh')),
             NavigationStateEnum.ticketPage =>
               const Center(child: Text('Ticket Page')),
             NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>(
-                create: (context) => DataLoadBloc(),
+                create: (context) => DataLoadBloc(
+                    "https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/$languageCode/movies.json"),
                 child: Center(
-                    child: (state as NavigationMoviePageState)
-                                .currentMoviePage ==
-                            TabMovieStateEnum.comingSoon
-                        ? const Movies(firstTab: TabMovieStateEnum.comingSoon)
-                        : const Movies(firstTab: TabMovieStateEnum.nowPlaying)),
+                    child:
+                        (state as NavigationMoviePageState).currentMoviePage ==
+                                TabMovieStateEnum.comingSoon
+                            ? const MoviesScreen(
+                                firstTab: TabMovieStateEnum.comingSoon)
+                            : const MoviesScreen(
+                                firstTab: TabMovieStateEnum.nowPlaying)),
               ),
             NavigationStateEnum.profilePage =>
               const Center(child: Text('Profile Page')),
@@ -103,19 +125,19 @@ class MainContent extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon_home.svg'),
-                  label: 'Home',
+                  label: AppLocalizations.of(context)!.home,
                   backgroundColor: Colors.black),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon_ticket.svg'),
-                  label: 'Ticket',
+                  label: AppLocalizations.of(context)!.ticket,
                   backgroundColor: Colors.black),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon_video.svg'),
-                  label: 'Movie',
+                  label: AppLocalizations.of(context)!.movie,
                   backgroundColor: Colors.black),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon_user.svg'),
-                  label: 'Profile',
+                  label: AppLocalizations.of(context)!.profile,
                   backgroundColor: Colors.black),
             ],
             onTap: (index) {

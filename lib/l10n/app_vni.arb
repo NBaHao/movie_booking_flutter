@@ -1,0 +1,39 @@
+{
+    "@@locale": "vi",
+    "hi": "Chào, {username}",
+    "welcomeback": "Mừng trở lại",
+    "nowplaying": "Đang Chiếu",
+    "search": "Tìm kiếm",
+    "comingsoon": "Sắp Chiếu",
+    "viewall": "Tất Cả",
+    "home": "Trang chủ",
+    "ticket": "Vé",
+    "profile": "Cá nhân",
+    "language": "Ngôn ngữ",
+    "movie": "Phim",
+    "configuration": "Cấu hình",
+    "filter": "Chỉ hiển thị phim có điểm đánh giá trên 3.0",
+    "watchTrailer": "Xem Trailer",
+    "movieGenre": "Thể Loại",
+    "censorship": "Phân loại",
+    "storyLine": "Nội dung",
+    "director": "Đạo diễn",
+    "actor": "Diễn viên",
+    "bookingNow" : "Đặt vé",
+    "review": "Đánh giá",
+    "numOfReivew": "{count, plural, other{{count} đánh giá} zero{0 đánh giá} one{1 đánh giá}}",
+    "@numOfReivew": {
+        "description": "id",
+        "placeholders": {
+            "count": {
+              "type": "int",
+              "format": "decimalPattern"
+            }
+        }
+    },
+    "seeMore": "Xem thêm",
+    "seeLess": "Thu gọn",
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh"
+
+}

@@ -1,0 +1,38 @@
+{
+    "@@locale": "en",
+    "hi": "Hi, {username}",
+    "welcomeback": "Welcome Back",
+    "nowplaying": "Now Playing",
+    "search": "Search",
+    "comingsoon": "Coming Soon",
+    "viewall": "View All",
+    "home": "Home",
+    "ticket": "Ticket",
+    "profile": "Profile",
+    "language": "Language",
+    "movie": "Movie",
+    "configuration": "Configuration",
+    "filter": "Only show movies with rating above 3.0",
+    "watchTrailer": "Watch Trailers",
+    "movieGenre": "Movie Genre",
+    "censorship": "Censorship",
+    "storyLine": "Story Line",
+    "director": "Director",
+    "actor": "Actor",
+    "bookingNow" : "Booking Now",
+    "review": "Review",
+    "numOfReivew": "{count, plural, other{{count} reviews} zero{0 reviews} one{1 review}}",
+    "@numOfReivew": {
+        "description": "id",
+        "placeholders": {
+            "count": {
+              "type": "int",
+              "format": "decimalPattern"
+            }
+        }
+    },
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "vietnamese": "Vietnamese",
+    "english": "English" 
+}

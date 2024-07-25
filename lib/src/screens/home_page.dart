@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_booking/src/blocs/configuration_bloc/configuration_bloc.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_event.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_state.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_event.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../blocs/navigation_bloc/navigation_bloc.dart';
 import '../blocs/navigation_bloc/navigation_state.dart';
 import '../models/movie.dart';
-import '../widgets/coming_soon.dart';
-import '../widgets/now_playing.dart';
+import '../widgets/coming_soon_widget.dart';
+import '../widgets/now_playing_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.userId});
@@ -21,21 +23,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late DataLoadBloc dataLoadBloc;
+
   @override
   void initState() {
-    context.read<DataLoadBloc>().add(const StartLoadingEvent());
+    dataLoadBloc = context.read<DataLoadBloc>();
+    dataLoadBloc.add(const StartLoadingEvent());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
-      if (state is DataLoadSuccessState || state is DataFilteredState) {
+      if (state is DataLoadSuccessState) {
         return Builder(builder: (context) {
           List<Movie> moviesTmp = state.movies;
-          if (state is DataFilteredState) {
+          if (context.read<ConfigurationBloc>().state.isFiltering) {
             moviesTmp =
-                moviesTmp.where((movie) => movie.rating! > 3.0).toList();
+                moviesTmp.where((movie) => (movie.rating ?? 0) > 3.0).toList();
           }
           return content(
               userId: widget.userId, movies: moviesTmp, context: context);
@@ -68,16 +74,10 @@ class _HomePageState extends State<HomePage> {
                 Expanded(child: welcomeMessage(userId: userId)),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/configuration',
-                            arguments: context.read<DataLoadBloc>().state
-                                is DataFilteredState)
-                        .then((isFiltering) {
-                      if (isFiltering == true) {
+                    Navigator.pushNamed(context, '/configuration').then((_) =>
                         context
                             .read<DataLoadBloc>()
-                            .add(const SetFilteringEvent());
-                      }
-                    });
+                            .add(const StartLoadingEvent()));
                   },
                   child: Image.asset('assets/icon_configuration.png',
                       width: 32, height: 32),
@@ -87,23 +87,27 @@ class _HomePageState extends State<HomePage> {
               searchWidget(),
               const SizedBox(height: 16),
               subTiltle(
-                  title: 'Now Playing',
+                  title: AppLocalizations.of(context)!.nowplaying,
                   action: () {
                     context.read<NavigationBloc>().add(
                         MoviePageWithTabEvent(2, TabMovieStateEnum.nowPlaying));
                   }),
               const SizedBox(height: 8),
-              NowPlaying(
-                  movies: movies.where((movie) => movie.isPlaying!).toList()),
+              NowPlayingWidget(
+                  movies: movies
+                      .where((movie) => movie.isPlaying ?? false)
+                      .toList()),
               const SizedBox(height: 8),
               subTiltle(
-                  title: 'Coming Soon',
+                  title: AppLocalizations.of(context)!.comingsoon,
                   action: () {
                     context.read<NavigationBloc>().add(
                         MoviePageWithTabEvent(2, TabMovieStateEnum.comingSoon));
                   }),
-              ComingSoon(
-                  movies: movies.where((movie) => movie.isComing!).toList()),
+              ComingSoonWidget(
+                  movies: movies
+                      .where((movie) => movie.isComing ?? false)
+                      .toList()),
             ],
           ),
         ),
@@ -113,7 +117,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget searchWidget() {
     return SearchBar(
-      hintText: 'Search',
+      hintText: AppLocalizations.of(context)!.search,
       backgroundColor:
           const WidgetStatePropertyAll<Color>(Color.fromRGBO(28, 28, 28, 1)),
       hintStyle: const WidgetStatePropertyAll<TextStyle>(TextStyle(
@@ -152,7 +156,7 @@ class _HomePageState extends State<HomePage> {
         TextButton(
           onPressed: () => action(),
           child: Row(children: [
-            Text('View All',
+            Text(AppLocalizations.of(context)!.viewall,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
@@ -172,9 +176,10 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Hi, $userId', style: Theme.of(context).textTheme.bodySmall),
+        Text(AppLocalizations.of(context)!.hi(userId),
+            style: Theme.of(context).textTheme.bodySmall),
         Text(
-          'Welcome Back',
+          AppLocalizations.of(context)!.welcomeback,
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
