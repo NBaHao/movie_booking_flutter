@@ -28,7 +28,8 @@ class _MoviesState extends State<MoviesScreen>
 
   @override
   void initState() {
-    context.read<DataLoadBloc>().add(const StartLoadingEvent());
+    // context.read<DataLoadBloc>().add(const StartLoadingEvent());
+    // print(context.read<DataLoadBloc>().state);
 
     super.initState();
   }
@@ -44,6 +45,7 @@ class _MoviesState extends State<MoviesScreen>
     return SafeArea(
       child: BlocBuilder<DataLoadBloc, DataLoadState>(
         builder: (context, state) {
+          print(state);
           List<Movie> movies = state.movies;
           if (state is DataLoadSuccessState) {
             return Column(

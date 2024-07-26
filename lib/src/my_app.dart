@@ -87,20 +87,20 @@ class MainContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final String languageCode = Localizations.localeOf(context).languageCode;
-    final DataLoadBloc dataLoadBloc = DataLoadBloc();
+    // final DataLoadBloc dataLoadBloc = DataLoadBloc();
     return BlocProvider<NavigationBloc>(
       create: (context) => NavigationBloc(),
       child: BlocBuilder<NavigationBloc, NavigationState>(
           builder: (context, state) {
         return Scaffold(
           body: switch (state.currentPage) {
-            NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>.value(
-                value: dataLoadBloc,
+            NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>(
+                create: (context) => DataLoadBloc(),
                 child: const HomePage(userId: 'harohienlanh')),
             NavigationStateEnum.ticketPage =>
               const Center(child: Text('Ticket Page')),
-            NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>.value(
-                value: dataLoadBloc,
+            NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>(
+                create: (context) => DataLoadBloc(),
                 child: Center(
                     child:
                         (state as NavigationMoviePageState).currentMoviePage ==

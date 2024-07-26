@@ -28,14 +28,18 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     dataLoadBloc = context.read<DataLoadBloc>();
-    dataLoadBloc.add(SetLanguageEvent(context.read<ConfigurationBloc>().state.languageCode));
-    dataLoadBloc.add(const StartLoadingEvent());
+    // dataLoadBloc.add(SetLanguageEvent(context.read<ConfigurationBloc>().state.languageCode));
+    // dataLoadBloc.add(const StartLoadingEvent());
+    dataLoadBloc.add(const TestEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
+    return BlocConsumer<DataLoadBloc, DataLoadState>(
+      listener: (context, state) {
+        print(state);
+      },builder: (context, state) {
       if (state is DataLoadSuccessState) {
         return Builder(builder: (context) {
           List<Movie> moviesTmp = state.movies;

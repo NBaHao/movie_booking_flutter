@@ -23,3 +23,7 @@ class DataLoadFailureState extends DataLoadState {
 
   final String error;
 }
+
+class TestState extends DataLoadState {
+  TestState(super.movies, {required super.languageCode});
+}

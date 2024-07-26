@@ -12,6 +12,11 @@ class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
   DataLoadBloc() : super(DataLoadInitialState([], languageCode: 'en')) {
     on<StartLoadingEvent>(_startLoading);
     on<SetLanguageEvent>(_setLanguage);
+    on<TestEvent>(_test);
+  }
+
+  void _test(TestEvent event, Emitter<DataLoadState> emit) {
+    emit(TestState([], languageCode: state.languageCode));
   }
 
   void _startLoading(

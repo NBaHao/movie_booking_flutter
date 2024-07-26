@@ -15,3 +15,7 @@ class SetLanguageEvent extends DataLoadEvent {
 
   final String languageCode;
 }
+
+class TestEvent extends DataLoadEvent {
+  const TestEvent();
+}
