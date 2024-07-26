@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     dataLoadBloc = context.read<DataLoadBloc>();
+    dataLoadBloc.add(SetLanguageEvent(context.read<ConfigurationBloc>().state.languageCode));
     dataLoadBloc.add(const StartLoadingEvent());
-
     super.initState();
   }
 
@@ -44,7 +44,10 @@ class _HomePageState extends State<HomePage> {
                 moviesTmp.where((movie) => (movie.rating ?? 0) > 3.0).toList();
           }
           return content(
-              userId: widget.userId, movies: moviesTmp, context: context);
+              userId: widget.userId,
+              movies: moviesTmp,
+              context: context,
+              state: state);
         });
       } else if (state is DataLoadInitialState ||
           state is DataLoadInProgressState) {
@@ -60,7 +63,8 @@ class _HomePageState extends State<HomePage> {
   Widget content(
       {required String userId,
       required List<Movie> movies,
-      required BuildContext context}) {
+      required BuildContext context,
+      required DataLoadSuccessState state}) {
     return SafeArea(
       top: true,
       child: Center(
@@ -74,10 +78,22 @@ class _HomePageState extends State<HomePage> {
                 Expanded(child: welcomeMessage(userId: userId)),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/configuration').then((_) =>
-                        context
-                            .read<DataLoadBloc>()
-                            .add(const StartLoadingEvent()));
+                    Navigator.pushNamed(context, '/configuration').then((_) {
+                      if (context
+                              .read<ConfigurationBloc>()
+                              .state
+                              .languageCode !=
+                          state.languageCode) {
+                        dataLoadBloc.add(SetLanguageEvent(context
+                            .read<ConfigurationBloc>()
+                            .state
+                            .languageCode));
+
+                        dataLoadBloc.add(const StartLoadingEvent());
+                      } else {
+                        setState(() {});
+                      }
+                    });
                   },
                   child: Image.asset('assets/icon_configuration.png',
                       width: 32, height: 32),

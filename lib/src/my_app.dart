@@ -86,7 +86,7 @@ class MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String languageCode = Localizations.localeOf(context).languageCode;
+    // final String languageCode = Localizations.localeOf(context).languageCode;
     return BlocProvider<NavigationBloc>(
       create: (context) => NavigationBloc(),
       child: BlocBuilder<NavigationBloc, NavigationState>(
@@ -94,14 +94,12 @@ class MainContent extends StatelessWidget {
         return Scaffold(
           body: switch (state.currentPage) {
             NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>(
-                create: (context) => DataLoadBloc(
-                    "https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/$languageCode/movies.json"),
+                create: (context) => DataLoadBloc(),
                 child: const HomePage(userId: 'harohienlanh')),
             NavigationStateEnum.ticketPage =>
               const Center(child: Text('Ticket Page')),
             NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>(
-                create: (context) => DataLoadBloc(
-                    "https://movie-booking-app-f7e08-default-rtdb.firebaseio.com/$languageCode/movies.json"),
+                create: (context) => DataLoadBloc(),
                 child: Center(
                     child:
                         (state as NavigationMoviePageState).currentMoviePage ==

@@ -9,3 +9,9 @@ class StartLoadingEvent extends DataLoadEvent {
 class SetFilteringEvent extends DataLoadEvent {
   const SetFilteringEvent();
 }
+
+class SetLanguageEvent extends DataLoadEvent {
+  const SetLanguageEvent(this.languageCode);
+
+  final String languageCode;
+}

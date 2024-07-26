@@ -1,24 +1,25 @@
 import '../../models/movie.dart';
 
 abstract class DataLoadState {
+  String languageCode;
   List<Movie> movies;
-  DataLoadState(this.movies);
+  DataLoadState(this.movies, {required this.languageCode});
 }
 
 class DataLoadInitialState extends DataLoadState {
-  DataLoadInitialState() : super([]);
+  DataLoadInitialState(super.movies, {required super.languageCode});
 }
 
 class DataLoadInProgressState extends DataLoadState {
-  DataLoadInProgressState(super.movies);
+  DataLoadInProgressState(super.movies, {required super.languageCode});
 }
 
 class DataLoadSuccessState extends DataLoadState {
-  DataLoadSuccessState(super.movies);
+  DataLoadSuccessState(super.movies, {required super.languageCode});
 }
 
 class DataLoadFailureState extends DataLoadState {
-  DataLoadFailureState(super.movies, this.error);
+  DataLoadFailureState(super.movies, this.error, {required super.languageCode});
 
   final String error;
 }
