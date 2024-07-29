@@ -5,6 +5,7 @@ import 'package:movie_booking/src/blocs/configuration_bloc/configuration_state.d
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_bloc.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_state.dart';
 import 'package:movie_booking/src/blocs/search_bloc/search_bloc.dart';
+import 'package:movie_booking/src/localizations.dart';
 import 'package:movie_booking/src/screens/configuration_screen.dart';
 import 'package:movie_booking/src/screens/movie_details_screen.dart';
 import 'package:movie_booking/src/screens/movies_screen.dart';
@@ -40,8 +41,7 @@ class MyApp extends StatelessWidget {
                           MovieDetailsScreen(movie: args as Movie));
                 case '/configuration':
                   return MaterialPageRoute(
-                      builder: (context) =>
-                          const ConfigurationScreen());
+                      builder: (context) => const ConfigurationScreen());
                 case '/searching':
                   return MaterialPageRoute(
                       builder: (context) => BlocProvider<SearchBloc>(
@@ -81,38 +81,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainContent extends StatelessWidget {
+class MainContent extends StatefulWidget {
   const MainContent({super.key});
 
   @override
+  State<MainContent> createState() => _MainContentState();
+}
+
+class _MainContentState extends State<MainContent> {
+  final PageController _pageController = PageController(initialPage: NavigationStateEnum.homePage.index);
+
+  @override
   Widget build(BuildContext context) {
-    // final String languageCode = Localizations.localeOf(context).languageCode;
-    final DataLoadBloc dataLoadBloc = DataLoadBloc();
+    final AppLocalizations appLocalizations = localizations(context);
     return BlocProvider<NavigationBloc>(
       create: (context) => NavigationBloc(),
-      child: BlocBuilder<NavigationBloc, NavigationState>(
+      child: BlocConsumer<NavigationBloc, NavigationState>(
+          listener: (context, state) {
+            _pageController.jumpToPage(state.currentPage.index);
+          },
           builder: (context, state) {
         return Scaffold(
-          body: switch (state.currentPage) {
-            NavigationStateEnum.homePage => BlocProvider<DataLoadBloc>.value(
-                value: dataLoadBloc,
-                child: const HomePage(userId: 'harohienlanh')),
-            NavigationStateEnum.ticketPage =>
-              const Center(child: Text('Ticket Page')),
-            NavigationStateEnum.moviePage => BlocProvider<DataLoadBloc>.value(
-                value: dataLoadBloc,
-                child: Center(
-                    child:
-                        (state as NavigationMoviePageState).currentMoviePage ==
-                                TabMovieStateEnum.comingSoon
-                            ? const MoviesScreen(
-                                firstTab: TabMovieStateEnum.comingSoon)
-                            : const MoviesScreen(
-                                firstTab: TabMovieStateEnum.nowPlaying)),
-              ),
-            NavigationStateEnum.profilePage =>
-              const Center(child: Text('Profile Page')),
-          },
+          body: PageView(
+              controller: _pageController,
+              children: NavigationStateEnum.values
+                  .map((navState) => switch (navState) {
+                        NavigationStateEnum.homePage =>
+                          BlocProvider<DataLoadBloc>(
+                              create: (context) => DataLoadBloc(),
+                              child: const HomePage(userId: 'harohienlanh')),
+                        NavigationStateEnum.ticketPage =>
+                          const Center(child: Text('Ticket Page')),
+                        NavigationStateEnum.moviePage =>
+                          BlocProvider<DataLoadBloc>(
+                              create: (context) => DataLoadBloc(),
+                              child: const Center(
+                                  child: MoviesScreen())),
+                        NavigationStateEnum.profilePage =>
+                          const Center(child: Text('Profile Page')),
+                      })
+                  .toList()),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Theme.of(context).colorScheme.primary,
             unselectedItemColor: const Color.fromRGBO(204, 204, 204, 1),
@@ -121,26 +129,30 @@ class MainContent extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.bold),
             currentIndex: state.currentPage.index,
-            items: [
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon_home.svg'),
-                  label: AppLocalizations.of(context)!.home,
-                  backgroundColor: Colors.black),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon_ticket.svg'),
-                  label: AppLocalizations.of(context)!.ticket,
-                  backgroundColor: Colors.black),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon_video.svg'),
-                  label: AppLocalizations.of(context)!.movie,
-                  backgroundColor: Colors.black),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon_user.svg'),
-                  label: AppLocalizations.of(context)!.profile,
-                  backgroundColor: Colors.black),
-            ],
+            items: NavigationStateEnum.values.map((navState) => switch (navState) {
+              NavigationStateEnum.homePage =>
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icon_home.svg'),
+                    label: appLocalizations.home,
+                    backgroundColor: Colors.black),
+              NavigationStateEnum.ticketPage =>
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icon_ticket.svg'),
+                    label: appLocalizations.ticket,
+                    backgroundColor: Colors.black),
+              NavigationStateEnum.moviePage =>
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icon_video.svg'),
+                    label: appLocalizations.movie,
+                    backgroundColor: Colors.black),
+              NavigationStateEnum.profilePage =>
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icon_user.svg'),
+                    label: appLocalizations.profile,
+                    backgroundColor: Colors.black),
+            }).toList(),
             onTap: (index) {
-              if (index == 2) {
+              if (index == NavigationStateEnum.moviePage.index) {
                 context.read<NavigationBloc>().add(
                     MoviePageWithTabEvent(index, TabMovieStateEnum.nowPlaying));
               } else {
