@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_booking/src/blocs/configuration_bloc/configuration_bloc.dart';
 import 'package:movie_booking/src/blocs/configuration_bloc/configuration_event.dart';
 import 'package:movie_booking/src/blocs/configuration_bloc/configuration_state.dart';
+import 'package:movie_booking/src/localizations.dart';
 
 class ConfigurationScreen extends StatefulWidget {
   const ConfigurationScreen({super.key});
@@ -13,6 +14,8 @@ class ConfigurationScreen extends StatefulWidget {
 }
 
 class _ConfigurationState extends State<ConfigurationScreen> {
+  late AppLocalizations _localizations;
+
   @override
   void initState() {
     super.initState();
@@ -22,9 +25,10 @@ class _ConfigurationState extends State<ConfigurationScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {
+          _localizations = localizations(context);
       return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.configuration),
+          title: Text(_localizations.configuration),
           centerTitle: true,
           actionsIconTheme: const IconThemeData(),
         ),
@@ -37,7 +41,7 @@ class _ConfigurationState extends State<ConfigurationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppLocalizations.of(context)!.filter),
+                    Text(_localizations.filter),
                     Switch(
                       value: state.isFiltering,
                       onChanged: (value) {
@@ -51,17 +55,17 @@ class _ConfigurationState extends State<ConfigurationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppLocalizations.of(context)!.language),
+                    Text(_localizations.language),
                     DropdownMenu(
                       width: 150,
                       initialSelection: state.languageCode,
                       dropdownMenuEntries: [
                         DropdownMenuEntry(
-                          label: AppLocalizations.of(context)!.english,
+                          label: _localizations.english,
                           value: 'en',
                         ),
                         DropdownMenuEntry(
-                          label: AppLocalizations.of(context)!.vietnamese,
+                          label: _localizations.vietnamese,
                           value: 'vi',
                         ),
                       ],

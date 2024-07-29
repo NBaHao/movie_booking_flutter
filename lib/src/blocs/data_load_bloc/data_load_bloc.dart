@@ -32,6 +32,8 @@ class DataLoadBloc extends Bloc<DataLoadEvent, DataLoadState> {
   }
 
   FutureOr<void> _setLanguage(SetLanguageEvent event, Emitter<DataLoadState> emit) {
+    if (state.languageCode == event.languageCode) return null;
     state.languageCode = event.languageCode;
+    add(const StartLoadingEvent());
   }
 }

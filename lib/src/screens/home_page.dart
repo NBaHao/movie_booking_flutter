@@ -6,6 +6,7 @@ import 'package:movie_booking/src/blocs/data_load_bloc/data_load_event.dart';
 import 'package:movie_booking/src/blocs/data_load_bloc/data_load_state.dart';
 import 'package:movie_booking/src/blocs/navigation_bloc/navigation_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movie_booking/src/localizations.dart';
 
 import '../blocs/navigation_bloc/navigation_bloc.dart';
 import '../blocs/navigation_bloc/navigation_state.dart';
@@ -22,22 +23,33 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late DataLoadBloc dataLoadBloc;
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
+  late DataLoadBloc _dataLoadBloc;
+  late AppLocalizations _localizations;
+
+  
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
-    dataLoadBloc = context.read<DataLoadBloc>();
-    dataLoadBloc.add(SetLanguageEvent(context.read<ConfigurationBloc>().state.languageCode));
-    dataLoadBloc.add(const StartLoadingEvent());
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _localizations = localizations(context);
+      _dataLoadBloc = context.read<DataLoadBloc>();
+      _dataLoadBloc.add(SetLanguageEvent(_localizations.localeName));
+      _dataLoadBloc.add(const StartLoadingEvent());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<DataLoadBloc, DataLoadState>(builder: (context, state) {
       if (state is DataLoadSuccessState) {
         return Builder(builder: (context) {
+          _localizations = localizations(context);
           List<Movie> moviesTmp = state.movies;
           if (context.read<ConfigurationBloc>().state.isFiltering) {
             moviesTmp =
@@ -84,12 +96,10 @@ class _HomePageState extends State<HomePage> {
                               .state
                               .languageCode !=
                           state.languageCode) {
-                        dataLoadBloc.add(SetLanguageEvent(context
+                        _dataLoadBloc.add(SetLanguageEvent(context
                             .read<ConfigurationBloc>()
                             .state
                             .languageCode));
-
-                        dataLoadBloc.add(const StartLoadingEvent());
                       } else {
                         setState(() {});
                       }
@@ -103,7 +113,7 @@ class _HomePageState extends State<HomePage> {
               searchWidget(),
               const SizedBox(height: 16),
               subTiltle(
-                  title: AppLocalizations.of(context)!.nowplaying,
+                  title: _localizations.nowplaying,
                   action: () {
                     context.read<NavigationBloc>().add(
                         MoviePageWithTabEvent(2, TabMovieStateEnum.nowPlaying));
@@ -115,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       .toList()),
               const SizedBox(height: 8),
               subTiltle(
-                  title: AppLocalizations.of(context)!.comingsoon,
+                  title: _localizations.comingsoon,
                   action: () {
                     context.read<NavigationBloc>().add(
                         MoviePageWithTabEvent(2, TabMovieStateEnum.comingSoon));
@@ -133,7 +143,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget searchWidget() {
     return SearchBar(
-      hintText: AppLocalizations.of(context)!.search,
+      hintText: _localizations.search,
       backgroundColor:
           const WidgetStatePropertyAll<Color>(Color.fromRGBO(28, 28, 28, 1)),
       hintStyle: const WidgetStatePropertyAll<TextStyle>(TextStyle(
@@ -172,7 +182,7 @@ class _HomePageState extends State<HomePage> {
         TextButton(
           onPressed: () => action(),
           child: Row(children: [
-            Text(AppLocalizations.of(context)!.viewall,
+            Text(_localizations.viewall,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
@@ -192,10 +202,10 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.hi(userId),
+        Text(_localizations.hi(userId),
             style: Theme.of(context).textTheme.bodySmall),
         Text(
-          AppLocalizations.of(context)!.welcomeback,
+          _localizations.welcomeback,
           style: Theme.of(context)
               .textTheme
               .bodyLarge!

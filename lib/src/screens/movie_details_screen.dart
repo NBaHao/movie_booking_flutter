@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:movie_booking/src/localizations.dart';
 import 'package:movie_booking/src/widgets/celebs_widget.dart';
 import 'package:movie_booking/src/widgets/movie_info_widget.dart';
 import 'package:readmore/readmore.dart';
@@ -15,15 +16,16 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = localizations(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
             SingleChildScrollView(
-              child: mainContent(context),
+              child: mainContent(context, appLocalizations),
             ),
             backBtn(context),
-            bookingBtn(context),
+            bookingBtn(context, appLocalizations),
           ],
         ),
       ),
@@ -52,7 +54,7 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 
-  Column mainContent(BuildContext context) {
+  Column mainContent(BuildContext context, AppLocalizations appLocalizations) {
     return Column(
       children: [
         Stack(children: [
@@ -102,7 +104,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       const SizedBox(width: 16),
-                      Text(AppLocalizations.of(context)!.review,
+                      Text(appLocalizations.review,
                           style: const TextStyle(
                               fontSize: 16,
                               color: Color.fromRGBO(242, 242, 242, 1),
@@ -120,7 +122,7 @@ class MovieDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold)),
                       const SizedBox(width: 4),
                       Text(
-                          AppLocalizations.of(context)!
+                         appLocalizations
                               .numOfReivew(movie.totalVotes ?? 0),
                           style: const TextStyle(
                             fontSize: 12,
@@ -147,7 +149,7 @@ class MovieDetailsScreen extends StatelessWidget {
                             onPressed: () {},
                             icon: const Icon(Icons.play_arrow_rounded,
                                 color: Color.fromRGBO(191, 191, 191, 1)),
-                            label: Text(AppLocalizations.of(context)!.watchTrailer,
+                            label: Text(appLocalizations.watchTrailer,
                                 style: const TextStyle(
                                     color: Color.fromRGBO(191, 191, 191, 1))),
                             style: OutlinedButton.styleFrom(
@@ -169,14 +171,14 @@ class MovieDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MovieInfoWidget(
-                  title: AppLocalizations.of(context)!.movieGenre, value: movie.genres?.join(", ") ?? ""),
+                  title: appLocalizations.movieGenre, value: movie.genres?.join(", ") ?? ""),
               const SizedBox(height: 8),
               MovieInfoWidget(
-                  title: AppLocalizations.of(context)!.censorship, value: movie.censorRating ?? ""),
+                  title: appLocalizations.censorship, value: movie.censorRating ?? ""),
               const SizedBox(height: 8),
-              MovieInfoWidget(title: AppLocalizations.of(context)!.language, value: movie.languages ?? ""),
+              MovieInfoWidget(title: appLocalizations.language, value: movie.languages ?? ""),
               const SizedBox(height: 20),
-              Text(AppLocalizations.of(context)!.storyLine,
+              Text(appLocalizations.storyLine,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
@@ -187,8 +189,8 @@ class MovieDetailsScreen extends StatelessWidget {
                   trimLines: 3,
                   colorClickableText: Theme.of(context).colorScheme.primary,
                   trimMode: TrimMode.Line,
-                  trimCollapsedText: AppLocalizations.of(context)!.seeMore,
-                  trimExpandedText: AppLocalizations.of(context)!.seeLess,
+                  trimCollapsedText: appLocalizations.seeMore,
+                  trimExpandedText: appLocalizations.seeLess,
                   lessStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 14,
                       color: Theme.of(context).colorScheme.primary,
@@ -201,9 +203,9 @@ class MovieDetailsScreen extends StatelessWidget {
                       fontSize: 16,
                       color: const Color.fromRGBO(246, 246, 246, 1))),
               const SizedBox(height: 20),
-              CelebsWidget(title: AppLocalizations.of(context)!.director, celebs: movie.directors ?? []),
+              CelebsWidget(title: appLocalizations.director, celebs: movie.directors ?? []),
               const SizedBox(height: 20),
-              CelebsWidget(title: AppLocalizations.of(context)!.actor, celebs: movie.actors ?? []),
+              CelebsWidget(title: appLocalizations.actor, celebs: movie.actors ?? []),
               const SizedBox(height: 70),
             ],
           ),
@@ -212,7 +214,7 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 
-  bookingBtn(BuildContext context) {
+  bookingBtn(BuildContext context, AppLocalizations appLocalizations) {
     return Positioned(
       bottom: 10,
       left: 16,
@@ -226,7 +228,7 @@ class MovieDetailsScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: Text(AppLocalizations.of(context)!.bookingNow,
+        child: Text(appLocalizations.bookingNow,
             style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16,

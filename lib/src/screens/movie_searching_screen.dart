@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movie_booking/src/localizations.dart';
 
 import '../blocs/search_bloc/search_bloc.dart';
 import '../blocs/search_bloc/search_event.dart';
@@ -15,15 +16,16 @@ class MovieSearchingScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<MovieSearchingScreen> {
   final TextEditingController _searchController = TextEditingController();
-
+  late AppLocalizations _localizations;
   @override
   void initState() {
-    context.read<SearchBloc>().add(SearchFetchEvent(''));
     super.initState();
+    context.read<SearchBloc>().add(SearchFetchEvent(''));
   }
 
   @override
   Widget build(BuildContext context) {
+    _localizations = localizations(context);
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
@@ -32,7 +34,7 @@ class _SearchScreenState extends State<MovieSearchingScreen> {
                 autofocus: true,
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.search,
+                  hintText: _localizations.search,
                   hintStyle: const TextStyle(color: Color.fromARGB(95, 255, 255, 255)),
                   border: InputBorder.none,
                 ),
